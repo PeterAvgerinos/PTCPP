@@ -10,36 +10,56 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <list>
 
 using namespace std;
 
-class Polynomial {
+class Polynomial{
 protected:
-    
-    
+    class Term {
+    protected:
+        int exponent;
+        int coefficient;
+        Term *next;
+        Term(int exp, int coeff, Term *n){
+            exponent = exp;
+            coefficient = coeff;
+            next = n;
+        };
+        friend class Polynomial;
+    };
 public:
     Polynomial(){
-        
+        polynomial = {};
+        it = 0;
     };
-    Polynomial(const Polynomial &p);
+    
+    Polynomial(const Polynomial &p){
+        polynomial = p.polynomial;
+        it = p.it;
+    };
+    
     ~Polynomial();
     
-    Polynomial & operator = (const Polynomial &p);
+    Polynomial & operator = (const Polynomial &p){
+        static Polynomial w;
+        w.polynomial = p.polynomial;
+        w.it = p.it;
+        return w;
+    };
     
-    void addTerm(int expon, int coeff);
-    double evaluate(double x);
-    
-    friend Polynomial operator + (const Polynomial &p, const Polynomial &q);
-    friend Polynomial operator * (const Polynomial &p, const Polynomial &q);
-    
-    friend ostream & operator << (ostream &out, const Polynomial &p);
+    void addTerm(int expon, int coeff){
+        Term a(expon, coeff, nullptr);
+        polynomial.insert (it, a);
+    }
     
     
     
 private:
-    int degree;
-    int coefficient;
+    list<class Temp> polynomial;
+    list<int>::iterator it;
     
 };
+
 
 #endif /* polynomial_hpp */

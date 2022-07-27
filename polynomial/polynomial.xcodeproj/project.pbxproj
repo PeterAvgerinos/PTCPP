@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A11265EB28907C0A009C1CB2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A11265EA28907C0A009C1CB2 /* main.cpp */; };
 		A11265F328907C2E009C1CB2 /* polynomial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A11265F128907C2E009C1CB2 /* polynomial.cpp */; };
+		A1338F9A28916B1C00AAE060 /* linkedlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1338F9828916B1C00AAE060 /* linkedlist.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		A11265EA28907C0A009C1CB2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A11265F128907C2E009C1CB2 /* polynomial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = polynomial.cpp; sourceTree = "<group>"; };
 		A11265F228907C2E009C1CB2 /* polynomial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = polynomial.hpp; sourceTree = "<group>"; };
+		A1338F9828916B1C00AAE060 /* linkedlist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = linkedlist.cpp; sourceTree = "<group>"; };
+		A1338F9928916B1C00AAE060 /* linkedlist.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = linkedlist.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +47,8 @@
 		A11265DE28907C0A009C1CB2 = {
 			isa = PBXGroup;
 			children = (
+				A1338F9828916B1C00AAE060 /* linkedlist.cpp */,
+				A1338F9928916B1C00AAE060 /* linkedlist.hpp */,
 				A11265F128907C2E009C1CB2 /* polynomial.cpp */,
 				A11265F228907C2E009C1CB2 /* polynomial.hpp */,
 				A11265E928907C0A009C1CB2 /* polynomial */,
@@ -124,6 +129,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1338F9A28916B1C00AAE060 /* linkedlist.cpp in Sources */,
 				A11265EB28907C0A009C1CB2 /* main.cpp in Sources */,
 				A11265F328907C2E009C1CB2 /* polynomial.cpp in Sources */,
 			);
