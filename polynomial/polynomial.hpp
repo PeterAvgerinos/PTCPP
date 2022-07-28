@@ -30,8 +30,8 @@ protected:
     };
 public:
     Polynomial(){
-        polynomial = {};
-        it = 0;
+        polynomial = {0};
+        it = polynomial.begin();
     };
     
     Polynomial(const Polynomial &p){
@@ -50,10 +50,12 @@ public:
     
     void addTerm(int expon, int coeff){
         Term a(expon, coeff, nullptr);
-        polynomial.insert (it, a);
+        polynomial.insert(it, a);
     }
-    
-    
+        
+    friend ostream & operator << (ostream &out, const Polynomial &p){
+      return out;          
+    };      
     
 private:
     list<class Temp> polynomial;
