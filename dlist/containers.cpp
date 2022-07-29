@@ -14,6 +14,32 @@ class Container {
 
 template <typename T>
 class dlist: public Container<T> { 
+    private: 
+        struct node { 
+        T data;
+        node *next, *previous;
+        node(const T &x, node *n, node *p) : data(x), next(n), previous(p) {};
+        };
+
+        node *the_front, *the_back;
+        int the_size;
+
+        void copy (const dlist &l) { 
+            for (node *p = l.the_front; p!= nullptr; p = p->next) { 
+                push_back(p->data);
+            }
+        }
+
+        void purge() { 
+            node *p = the_front;
+            while (p != nullptr) { 
+                node *q = p;
+                p = p->next;
+                delete q; 
+            }
+
+        }
+
     public: 
         dlist() : the_front(nullptr), the_back(nullptr), the_size(0) {} 
         dlist(const dlist &l) : the_front(nullptr), the_back(nullptr), the_size(0) {copy(l);}
@@ -70,45 +96,47 @@ class dlist: public Container<T> {
 
         T & back() { return the_back->data;};
         T & front() { return the_front->data;};
+        
+        class iterator {
+            public: 
+                iterator(const iterator &i): ptr(i.ptr) {}
+                T & operator *() { return ptr->data; }
+                iterator & operator ++ () { ptr = ptr->next; return *this; }
+                bool operator != ( const iterator &i) const { return ptr != i.ptr; }
+                bool operator == ( const iterator &i) const { return ptr == i.ptr; }
 
-    private: 
-        struct node { 
-        T data;
-        node *next, *previous;
-        node(const T &x, node *n, node *p) : data(x), next(n), previous(p) {};
+            private: 
+                node *ptr; 
+                iterator(node *p): ptr(p) {}
+                friend class dlist;
+
         };
 
-        node *the_front, *the_back;
-        int the_size;
+        iterator begin() { return iterator(the_front); }
+        iterator end() { return iterator(nullptr); }
 
-        void copy (const dlist &l) { 
-            for (node *p = l.the_front; p!= nullptr; p = p->next) { 
-                push_back(p->data);
-            }
-        }
-
-        void purge() { 
-            node *p = the_front;
-            while (p != nullptr) { 
-                node *q = p;
-                p = p->next;
-                delete q; 
-            }
-
-        }
+        
 };
 
 template <typename T>
-void print_and_clear(dlist<T> &l) { 
-    while (!l.empty()) { 
-        cout << " " << l.front();
-        l.pop_front();
+void print(dlist<T> &l) { 
+    for (auto i = l.begin(); i != l.end(); ++i){ 
+        cout << *i << " ";
     }
 }
 
+
 int main() { 
     dlist<int> l;
-    for (int i = 0; i < 10; ++i) l.push_back(i);
-    cout << l.size() << endl;
-    print_and_clear(l);
+    for (int i=0; i < 10; ++i) l.push_back(i);
+    cout << l.size() << endl; 
+    print(l);
 }
+
+
+
+
+
+
+
+
