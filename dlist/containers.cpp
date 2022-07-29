@@ -1,5 +1,5 @@
+#include <ctime>
 #include <iostream>
-#include <string>
 
 using namespace std; 
 
@@ -17,13 +17,15 @@ class dlist: public Container<T> {
     public: 
         dlist() : the_front(nullptr), the_back(nullptr), the_size(0) {} 
         dlist(const dlist &l) : the_front(nullptr), the_back(nullptr), the_size(0) {copy(l);}
+
+        virtual ~dlist() override { purge(); }
+
         dlist & operator = (const dlist &l){
             clear();
             copy(l);
             return *this;
         };
 
-        virtual ~dlist() override { purge(); }
         virtual int size() const override { return the_size;}; 
         virtual void clear() override{
             purge();
@@ -42,7 +44,7 @@ class dlist: public Container<T> {
 
         void push_front(const T &x) { 
             node *p = new node(x, the_front, nullptr);
-            if (the_front != nullptr ) the_front->next = p;
+            if (the_front != nullptr ) the_front->previous = p;
             else the_back = p; 
             the_front = p;
             ++the_size;
@@ -58,8 +60,8 @@ class dlist: public Container<T> {
         };
 
         void pop_front() {
-            node *p = the_back;
-            the_front = p->previous;
+            node *p = the_front;
+            the_front = p->next;
             if(the_front != nullptr) the_front->next = nullptr; 
             else the_back = nullptr; 
             delete p;
@@ -97,25 +99,16 @@ class dlist: public Container<T> {
 };
 
 template <typename T>
-void print(dlist<T> &l) { 
-    while (!l.empty()) {
-        cout << l.front();
+void print_and_clear(dlist<T> &l) { 
+    while (!l.empty()) { 
+        cout << " " << l.front();
         l.pop_front();
     }
-
-};
+}
 
 int main() { 
     dlist<int> l;
     for (int i = 0; i < 10; ++i) l.push_back(i);
-    cout << "l of size " << l.size() << endl;
-    print(l);
-    cout << "Print the list again" << endl;
-    cout << "l of size " << l.size() << endl; 
-    print(l);
-    return 0;
-    
-
-
-
+    cout << l.size() << endl;
+    print_and_clear(l);
 }
