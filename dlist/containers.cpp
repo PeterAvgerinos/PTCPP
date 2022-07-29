@@ -101,6 +101,12 @@ class dlist: public Container<T> {
             public: 
                 iterator(const iterator &i): ptr(i.ptr) {}
                 T & operator *() { return ptr->data; }
+                iterator & operator ++ (int) {
+                    iterator result(*this);
+                    ptr = ptr->next;
+                    return result; 
+                }
+
                 iterator & operator ++ () { ptr = ptr->next; return *this; }
                 bool operator != ( const iterator &i) const { return ptr != i.ptr; }
                 bool operator == ( const iterator &i) const { return ptr == i.ptr; }
