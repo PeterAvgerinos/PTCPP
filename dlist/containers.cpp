@@ -131,6 +131,11 @@ int main() {
     for (int i=0; i < 10; ++i) l.push_back(i);
     cout << l.size() << endl; 
     print(l);
+    for (int &x: l) x += 2;
+    for (int i=0; i < 10; ++i) l.push_back(i);
+    cout << l.size() << endl; 
+    print(l);
+    
 }
 
 
