@@ -1,3 +1,4 @@
+#include <__nullptr>
 #include <iostream>
 
 using namespace std; 
@@ -139,6 +140,9 @@ void print(dlist<T> &l) {
     }
 }
 
+
+
+
 // -----------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------
 
@@ -192,11 +196,21 @@ class btree: public Container<T> {
             return false;
         }
 
-        static void print(node *t) { 
-            if (t != nullptr) { 
-                cout << " " << t->data;
-                print(t->left);
-                print(t->right);
+        static node *leftdown(node *t) { 
+            if (t == nullptr || t->left == nullptr) {
+                return t;
+            }
+            else { 
+                return leftdown(t->left);
+            }
+        }
+
+        static node *leftup(node *t) { 
+            if (t->parent != nullptr || t->parent->left == t) { 
+                return t->parent;
+            }
+            else {
+                return leftup(t->parent);
             }
         }
 
@@ -230,40 +244,56 @@ class btree: public Container<T> {
             }
         };
 
-        void print() { 
-            print(root);
-        }
+        
+
+
+// -----------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------
+
+        class iterator { 
+             public:
+                iterator(const iterator &i): ptr(i.ptr) {}
+                T & operator *() { return ptr->data; }
+                iterator & operator ++ (int) {
+                    iterator result(*this);
+                    ++(*this);
+                    return result; 
+                }
+
+                iterator & operator ++ () {
+                    if (ptr != nullptr) { 
+                        if (ptr->right != nullptr) { 
+                            ptr = leftdown(ptr->right);
+                        }
+                        else { 
+                           ptr = leftup(ptr); 
+                        }
+                    }
+                    return *this;
+                }
+
+                bool operator != ( const iterator &i) const { return ptr != i.ptr; }
+                bool operator == ( const iterator &i) const { return ptr == i.ptr; }
+
+            private: 
+                node *ptr; 
+                iterator(node *p): ptr(p) {}
+                friend class btree;
+
+        };
+
+        iterator begin() { return iterator(leftdown(root)); }
+        iterator end() { return iterator(nullptr); }
+
 };        
 
 
-// -----------------------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------------------
-
-//         class iterator { public: iterator(const iterator &i): ptr(i.ptr) {}
-//                 T & operator *() { return ptr->data; }
-//                 iterator & operator ++ (int) {
-//                     iterator result(*this);
-//                     ptr = ptr->left;
-//                     return result; 
-//                 }
-//
-//                 iterator & operator ++ () { ptr = ptr->left; return *this; }
-//                 bool operator != ( const iterator &i) const { return ptr != i.ptr; }
-//                 bool operator == ( const iterator &i) const { return ptr == i.ptr; }
-//
-//             private: 
-//                 node *ptr; 
-//                 iterator(node *p): ptr(p) {}
-//                 friend class btree;
-//
-//         };
-//
-//         iterator begin() { return iterator(the_front); }
-//         iterator end() { return iterator(nullptr); }
-//
-//         
-// };
-
+template <typename T>
+void print_tree(btree<T> &l) { 
+    for (auto i = l.begin(); i != l.end(); ++i){ 
+        cout << *i << " ";
+    }
+}
 // -----------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------
 
@@ -272,15 +302,21 @@ int main() {
     int x[] = {5, 2, 8, 4, 1, 7, 6, 0, 9, 3};
     for (int i=0; i < 10; ++i) t.insert(x[i]);
     cout << t.size() << endl;
-    t.print();
+    print_tree(t);
     cout << endl;
+    cout << t.size() << endl;
+    print_tree(t);
+    cout << endl;
+    for (int &x: t) x+= 2;
+    cout << t.size() << endl;
+    print_tree(t);
+    cout << endl;
+    auto j = t.begin();
+    ++j;
+    ++j;
+    // cout << *j << endl; 
+    // cout << *(++j) << endl;
+    // cout << *j << endl; 
+
 
 }
-
-
-
-
-
-
-
-
