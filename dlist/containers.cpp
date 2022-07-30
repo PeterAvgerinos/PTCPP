@@ -130,6 +130,8 @@ void print(dlist<T> &l) {
     }
 }
 
+// -----------------------------------------------------------------------------------------------------------
+
 template <typename T>
 class btree: public Container<T> { 
     private: 
@@ -180,6 +182,14 @@ class btree: public Container<T> {
             return false;
         }
 
+        static void print(node *t) { 
+            if (t != nullptr) { 
+                cout << " " << t->data;
+                print(t->left);
+                print(t->right);
+            }
+        }
+
 
     public: 
         btree() : root(nullptr), the_size(0) {} 
@@ -209,6 +219,10 @@ class btree: public Container<T> {
                 ++the_size;
             }
         };
+
+        void print() { 
+            print(root);
+        }
 };        
 //         class iterator { public: iterator(const iterator &i): ptr(i.ptr) {}
 //                 T & operator *() { return ptr->data; }
@@ -235,11 +249,15 @@ class btree: public Container<T> {
 //         
 // };
 
+// -----------------------------------------------------------------------------------------------------------
+
 int main() { 
     btree<int> t;
     int x[] = {5, 2, 8, 4, 1, 7, 6, 0, 9, 3};
     for (int i=0; i < 10; ++i) t.insert(x[i]);
     cout << t.size() << endl;
+    t.print();
+    cout << endl;
 
 }
 
