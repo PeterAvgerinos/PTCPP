@@ -92,8 +92,21 @@ class Polynomial {
             return *p;
         };
 
-        friend Polynomial & operator * (const Polynomial &a, const Polynomial &b);
+        friend Polynomial & operator * (const Polynomial &a, const Polynomial &b) { 
+            Polynomial *p = new Polynomial();
+            for (Term *t = p->the_front; t != nullptr; t= t->next) { 
+                for (Term *y = p->the_front; y != nullptr; y = y->next) { 
+                    p->addTerm(t->exponent, a.evaluate(t->coefficient) * b.evaluate(y->coefficient));
+                }
+            }
+            return *p;
+        };
 
-        friend ostream & operator << (ostream &out, const Polynomial &p);
+        friend ostream & operator << (ostream &out, const Polynomial &p) { 
+            for (Term *t = p.the_front; t != nullptr; t = t->next) { 
+                out << t->coefficient << "x" << t->exponent;
+            }
+            return out;
+        };
 
 };
