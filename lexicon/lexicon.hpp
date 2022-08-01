@@ -150,7 +150,20 @@ class lexicon {
             }
         };
 
-        friend ostream & operator << (ostream &out, const lexicon &l);
+        friend ostream & operator << (ostream &out, const lexicon &l) { 
+            node * temp; 
+            temp = l.root;
+            while (temp != nullptr) { 
+                out << temp->data << " " << temp->count << endl;
+                if (temp->left != nullptr) { 
+                    temp = temp->left;
+                }
+                else { 
+                    temp = temp->right;
+                }
+            }
+            return out;
+        };
 
 
 };
