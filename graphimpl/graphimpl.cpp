@@ -32,10 +32,10 @@ class Vertex {
         list<Edge> edgelist;
         Vertex();
         Vertex(int &id):ID(id) {}
-        Vertex(const Vertex &v): ID(v.ID), edgelist(v.edgelist) {};
+        Vertex(Vertex &v): ID(v.ID), edgelist(v.edgelist) {};
         ~Vertex(); 
 
-        void setID(const int &id) { 
+        void setID(int &id) { 
             ID = id;
         };
 
@@ -68,6 +68,15 @@ class Graph {
             return false; 
         }
 
+        bool edgeExists(int &id1, int &id2) { 
+                for (auto iterator=vertices.at(id1).edgelist.begin(); iterator != vertices.at(id1).edgelist.end(); iterator++) { 
+                    if ((*iterator).getDestination() == id2) { 
+                        return true;
+                    }
+                }            
+                return false;
+        }
+
     public: 
         Graph();
         Graph(Graph &p);
@@ -84,15 +93,21 @@ class Graph {
 
         void addEdge(int &id1, int &id2) { 
             if (vertexExistsbyID(id1) && vertexExistsbyID(id2)) { 
-                for (auto iterator=vertices.at(id1).edgelist.begin(); iterator != vertices.at(id1).edgelist.end(); iterator++) { 
-                    if ((*iterator).getDestination() == id2) { 
-                        return;
-                    }
-                    else { 
+                    if (!edgeExists(id1, id2)) { 
                         vertices.at(id1).edgelist.push_back(id2);
+                        vertices.at(id2).edgelist.push_back(id1);
                     }
-
                 }            
+        }
+
+        friend ostream & operator << (ostream &out,Graph &g) { 
+            for (auto iterator=g.vertices.begin(); iterator != g.vertices.end(); iterator++){ 
+                out << (*iterator).getID();
+                for (auto jiterator=(*iterator).edgelist.begin(); jiterator != (*iterator).edgelist.end(); jiterator++) {
+                    out << (*jiterator).getDestination() << " ";
+                }
+                out << endl;
             }
+            return out;
         }
 };
