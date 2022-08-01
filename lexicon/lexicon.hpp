@@ -59,6 +59,54 @@ class lexicon {
             return false; 
         }
 
+        node * search(node *root, const string &s) const { 
+            while (root != nullptr) { 
+                if (root->data == s) { 
+                    return root;
+                }
+                else if (root->data < s) { 
+                    root = root->left;
+                }
+                else { 
+                    root = root->right;
+                }
+            }
+            return nullptr;
+        }
+
+        int searchd(node *root, const string &s) const { 
+            int depth = 0;
+            while (root != nullptr) { 
+                if (root->data == s) { 
+                    return depth;
+                }
+                else if (root->data < s) { 
+                    root = root->left;
+                    depth++;
+                }
+                else { 
+                    root = root->right;
+                    depth++;
+                }
+            }
+            return -1;
+        }
+
+        void search_delete(node *root, const string &s) const { 
+            while (root != nullptr) { 
+                if (root->data == s) { 
+                    delete root; 
+                }
+                else if (root->data < s) { 
+                    root = root->left;
+                }
+                else { 
+                    root = root->right;
+                }
+            }
+        }
+
+
     public:
         lexicon(): root(nullptr), size(0) {};
         ~lexicon() { 
@@ -75,9 +123,32 @@ class lexicon {
             }
         };
 
-        int lookup(const string &s) const;
-        int depth(const string &s) const;
-        void replace(const string &a, const string &b);
+        int lookup(const string &s) const { 
+            if (search(root, s) != nullptr) { 
+                return root->count;
+            }
+            return 0;
+        };
+
+        int depth(const string &s) const { 
+            return searchd(root, s);
+        };
+
+        void replace(const string &a, const string &b) { 
+            if (lookup(a) == 0) { 
+                return;
+            }
+            else { 
+                search_delete(root, a);
+                if (lookup(b) == 0) { 
+                    insert(b);
+                    search(root, b)->count = 1;
+                }
+                else { 
+                    search(root, b)->count++;
+                }
+            }
+        };
 
         friend ostream & operator << (ostream &out, const lexicon &l);
 
