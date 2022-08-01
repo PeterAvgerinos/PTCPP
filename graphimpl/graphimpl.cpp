@@ -1,5 +1,6 @@
 #include <iostream> 
 #include <list>
+#include <ostream>
 #include <vector>
 #include <iterator>
 
@@ -30,8 +31,8 @@ class Vertex {
 
     public:
         list<Edge> edgelist;
-        Vertex();
-        Vertex(int &id):ID(id) {}
+        Vertex(): ID(0), edgelist() {};
+        Vertex(const int &id):ID(id), edgelist() {}
         Vertex(Vertex &v): ID(v.ID), edgelist(v.edgelist) {};
         ~Vertex(); 
 
@@ -49,6 +50,8 @@ class Vertex {
 class Graph { 
     private: 
         vector<Vertex> vertices;
+        int N;
+        int M;
 
         bool vertexExists(Vertex &v) { 
             for (auto iterator=vertices.begin(); iterator != vertices.end(); iterator++) { 
@@ -59,7 +62,7 @@ class Graph {
             return false;
         }
 
-        bool vertexExistsbyID(int &id) { 
+        bool vertexExistsbyID(const int &id) { 
             for (int i=0; i < vertices.size(); i++){ 
                 if (id == vertices.at(i).getID()) { 
                     return true;
@@ -68,7 +71,7 @@ class Graph {
             return false; 
         }
 
-        bool edgeExists(int &id1, int &id2) { 
+        bool edgeExists(const int &id1,const int &id2) { 
                 for (auto iterator=vertices.at(id1).edgelist.begin(); iterator != vertices.at(id1).edgelist.end(); iterator++) { 
                     if ((*iterator).getDestination() == id2) { 
                         return true;
@@ -82,6 +85,22 @@ class Graph {
         Graph(Graph &p);
         ~Graph();
 
+        void setN(const int &n) { 
+            N = n;
+        }
+
+        void setM(const int &m) { 
+            M = m;
+        }
+        
+        const int getN() { 
+            return N;
+        }
+
+        const int getM() {
+            return M;
+        }
+
         void addVertex(Vertex &v) { 
             if (vertexExists(v)) { 
                 return;
@@ -91,7 +110,7 @@ class Graph {
             }
         }
 
-        void addEdge(int &id1, int &id2) { 
+        void addEdge(const int &id1, const int &id2) { 
             if (vertexExistsbyID(id1) && vertexExistsbyID(id2)) { 
                     if (!edgeExists(id1, id2)) { 
                         vertices.at(id1).edgelist.push_back(id2);
@@ -111,3 +130,16 @@ class Graph {
             return out;
         }
 };
+
+int main() { 
+    int N;
+    int M;
+    int K;
+    cin >> M >> N >> K;
+    Graph g;
+    for (int i=0; i < M; ++i) {
+        Vertex temp(i);
+        g.addVertex(temp);
+    }
+}
+
