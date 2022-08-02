@@ -219,6 +219,15 @@ class Graph {
             return false;
         }
 
-        friend ostream & operator << (ostream &out, const Graph &g);
+        friend ostream & operator << (ostream &out,Graph &g) { 
+            for (auto iterator = g.vertices.begin(); iterator != g.vertices.end(); ++iterator) {
+                out << (*iterator).getID();
+                for (auto jiterator = (*iterator).getList().begin(); jiterator != (*iterator).getList().end(); ++jiterator) {
+                    out << (*jiterator).getDestination();
+                }
+                out << endl;
+            }
+            return out;
+        }
         
 };
