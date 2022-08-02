@@ -159,7 +159,7 @@ class Graph {
         }
 
     public:
-        Graph(); 
+        Graph(): vertices() {} 
         Graph(const vector<Vertex> &v) {copy(v);}; 
         Graph(const Graph &g) {copy(g.vertices);}
         ~Graph(){purge();}
@@ -180,9 +180,8 @@ class Graph {
 
         void addEdgebyID(const int &id1, const int &id2) {
             if (!EdgeExistsbyID(id1, id2)) { 
-                Edge* e = new Edge(id2);
-                vertices[id1].getList().(e);
-                (this->vertices)[id1].getList().push_back(e);
+                Edge e(id2);
+                vertices[id1].getList().push_back(e);
             }
         }
 
@@ -234,5 +233,17 @@ class Graph {
 };
 
 int main() {
-    cout << endl;
+    Vertex a(0);
+    Vertex b(1);
+    Vertex c(2);
+    Graph g;
+    g.addVertex(a);
+    g.addVertex(b);
+    g.addVertex(c);
+    g.addEdgebyID(0,1);
+    g.addEdgebyID(1,2);
+    g.addEdgebyID(2,0);
+    g.EulerCircuit();
+    g.EulerPath();
+    cout << g;
 }
