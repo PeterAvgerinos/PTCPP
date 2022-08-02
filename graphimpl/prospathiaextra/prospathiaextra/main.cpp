@@ -4,11 +4,11 @@
 #include <list>
 #include <vector>
 
-using namespace std; 
+using namespace std;
 
 
-class Edge { 
-    private: 
+class Edge {
+    private:
         int Destination;
 
     public:
@@ -20,25 +20,25 @@ class Edge {
             return Destination;
         }
 
-        void setDestination(const int &d) { 
-           this->Destination = d; 
+        void setDestination(const int &d) {
+           this->Destination = d;
         }
 };
 
 
-class Vertex { 
+class Vertex {
     private:
         int ID;
         list<Edge> edgelist;
 
-        void copy(const list<Edge> &e) { 
-            for (const auto &Destination: e) { 
+        void copy(const list<Edge> &e) {
+            for (const auto &Destination: e) {
                 this->edgelist.push_back(Destination);
             }
         }
 
         void purge() {
-            for (const auto &edge: edgelist) { 
+            for (const auto &edge: edgelist) {
                 edgelist.pop_front();
             }
         }
@@ -49,21 +49,21 @@ class Vertex {
         Vertex(const Vertex &v): ID(v.ID), edgelist() {copy(v.edgelist);}
         ~Vertex() {purge();}
 
-        int getID() const { 
+        int getID() const {
             return this->ID;
         }
 
-        const list<Edge> & getList() const { 
+        const list<Edge> & getList() const {
             return edgelist;
         }
 
-        void setID(const int &id) { 
+        void setID(const int &id) {
             this->ID = id;
         }
 
         void setList(const list<Edge> &l) {
             purge();
-            for (const auto &edge: l) { 
+            for (const auto &edge: l) {
                 edgelist.push_back(edge);
             }
         }
@@ -71,22 +71,22 @@ class Vertex {
 };
 
 
-class Graph { 
-    private: 
+class Graph {
+    private:
         vector<Vertex> vertices;
 
-        bool VertexExists(Vertex &v) { 
-            for (const auto &vertex: vertices) { 
-                if (vertex.getID() == v.getID()) { 
+        bool VertexExists(Vertex &v) {
+            for (const auto &vertex: vertices) {
+                if (vertex.getID() == v.getID()) {
                     return true;
                 }
             }
-            return false; 
+            return false;
         }
 
 
         bool VertexExistsbyID(const int &id) {
-            for (const auto &vertex: vertices) { 
+            for (const auto &vertex: vertices) {
                 if (vertex.getID() == id) {
                     return true;
                 }
@@ -95,21 +95,21 @@ class Graph {
         };
 
         const bool EdgeExistsbyID(const int &id1, const int &id2) {
-            if (VertexExistsbyID(id1) && VertexExistsbyID(id2)) { 
+            if (VertexExistsbyID(id1) && VertexExistsbyID(id2)) {
                 for (const auto &edge: vertices[id1].getList()) {
                     if (edge.getDestination() == id2){
                         return true;
-                    }                    
+                    }
                 }
             }
             return false;
         }
 
-        void copy(const vector<Vertex> &v){ 
+        void copy(const vector<Vertex> &v){
             purge();
             for (const auto &vertex: v) {
                 vertices.push_back(vertex);
-            }           
+            }
         };
 
         void purge() {
@@ -119,7 +119,7 @@ class Graph {
         }
 
         int VertexAmount() {
-            int count = 0; 
+            int count = 0;
             for (const auto &vertex: vertices) {
                 count++;
             }
@@ -128,7 +128,7 @@ class Graph {
 
         vector<int> inDegree() {
             vector<int> counts;
-            for (int i=0; i < VertexAmount(); ++i) { 
+            for (int i=0; i < VertexAmount(); ++i) {
                 counts[i] = 0;
             }
             for (const auto &vertex: vertices) {
@@ -159,13 +159,13 @@ class Graph {
         }
 
     public:
-        Graph(); 
-        Graph(const vector<Vertex> &v) {copy(v);}; 
+        Graph();
+        Graph(const vector<Vertex> &v) {copy(v);};
         Graph(const Graph &g) {copy(g.vertices);}
         ~Graph(){purge();}
 
         void addVertex(Vertex &v) {
-            if (!VertexExists(v)){ 
+            if (!VertexExists(v)){
                 this->vertices.push_back(v);
             }
         }
@@ -179,10 +179,9 @@ class Graph {
             
 
         void addEdgebyID(const int &id1, const int &id2) {
-            if (!EdgeExistsbyID(id1, id2)) { 
+            if (!EdgeExistsbyID(id1, id2)) {
                 Edge* e = new Edge(id2);
-                vertices[id1].getList().(e);
-                (this->vertices)[id1].getList().push_back(e);
+                this->vertices[id1].getList().push_back(e);
             }
         }
 
@@ -191,15 +190,15 @@ class Graph {
             for (int i=0; i < VertexAmount(); ++i) {
                 count[i] = 0;
             }
-            if (!(inDegree() == count && outDegree() == count )) { 
+            if (!(inDegree() == count && outDegree() == count )) {
                 if (inDegree() == outDegree()) {
                     return true;
                 }
             }
-            return false; 
+            return false;
         }
 
-        bool EulerPath() { 
+        bool EulerPath() {
             int count1 = 0;
             int count2 = 0;
             int count3 = 0;
@@ -214,13 +213,13 @@ class Graph {
                     count3++;
                 }
             }
-            if (count1 == count2 == 1 && count3 == VertexAmount() - 2) { 
+            if (count1 == count2 == 1 && count3 == VertexAmount() - 2) {
                 return true;
             }
             return false;
         }
 
-        friend ostream & operator << (ostream &out,Graph &g) { 
+        friend ostream & operator << (ostream &out,Graph &g) {
             for (const auto &vertex: g.vertices) {
                 out << vertex.getID();
                 for (const auto &edge: g.vertices[vertex.getID()].getList()) {
