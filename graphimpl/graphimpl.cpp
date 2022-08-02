@@ -130,16 +130,3 @@ class Graph {
             return out;
         }
 };
-
-int main() { 
-    int N;
-    int M;
-    int K;
-    cin >> M >> N >> K;
-    Graph g;
-    for (int i=0; i < M; ++i) {
-        Vertex temp(i);
-        g.addVertex(temp);
-    }
-}
-
