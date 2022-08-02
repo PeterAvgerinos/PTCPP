@@ -59,7 +59,7 @@ class Vertex {
             this->ID = id;
         }
 
-        void setList(const list<Edge> &l) {
+        void setList(list<Edge> &l) {
             purge();
             for (auto iterator = l.begin(); iterator != l.end(); ++iterator) { 
                 this->edgelist.push_back(*iterator);
@@ -71,6 +71,16 @@ class Vertex {
 class Graph { 
     private: 
         vector<Vertex> vertices;
+
+        bool VertexExists(Vertex &v) { 
+            for (auto iterator = vertices.begin(); iterator != vertices.end(); ++iterator) { 
+                if ((*iterator).getID() == v.getID()) { 
+                    return true;
+                }
+            }
+            return false; 
+        }
+
 
         bool VertexExistsbyID(const int &id) {
             for (auto iterator = vertices.begin(); iterator != vertices.end(); ++iterator) { 
@@ -84,23 +94,46 @@ class Graph {
         bool EdgeExistsbyID(const int &id1, const int &id2) {
             if (VertexExistsbyID(id1) && VertexExistsbyID(id2)) { 
                 for (auto iterator = vertices.at(id1).getList().begin(); iterator != vertices.at(id1).getList().end(); ++iterator) {
-                    
+                    if ((*iterator).getDestination() == id2){
+                        return true;
+                    }                    
                 }
+            }
+            return false;
+        }
+
+        void copy(const vector<Vertex> &v){ 
+            purge();
+            for (auto iterator = v.begin(); iterator != v.end(); ++iterator) {
+                vertices.push_back(*iterator);
+            }           
+        };
+
+        void purge() {
+            for (auto iterator = vertices.end(); iterator != vertices.begin(); --iterator) {
+                vertices.pop_back();
             }
         }
 
-        void copy(const vector<Vertex> &v);
-
-        void purge();
-
     public:
         Graph(); 
-        Graph(const vector<Vertex> &v); 
-        Graph(const Graph &g);
-        ~Graph();
+        Graph(const vector<Vertex> &v) {copy(v);}; 
+        Graph(const Graph &g) {copy(g.vertices);}
+        ~Graph(){purge();}
 
-        void addVertex(const Vertex &v);
-        void addVertexbyID(const int &id);
+        void addVertex(Vertex &v) {
+            if (!VertexExists(v)){ 
+                this->vertices.push_back(v);
+            }
+        }
+
+        void addVertexbyID(const int &id) {
+            if (!VertexExistsbyID(id)) {
+                Vertex v(id);
+                this->vertices.push_back(v);
+            }
+        }
+            
 
         void addEdgebyID(const int &id1, const int &id2);
 
