@@ -115,6 +115,25 @@ class Graph {
             }
         }
 
+        int outDegree(Vertex &v) {
+            int count = 0;
+            for (auto iterator = vertices.at(v.getID()).getList().begin(); iterator != vertices.at(v.getID()).getList().end(); ++iterator) {
+                count++;
+            }
+            return count;
+        }
+
+        int inDegree(Vertex &v) {
+            int count = 0;
+            for (auto iterator = vertices.begin(); iterator != vertices.end(); ++iterator) { 
+                for (auto jiterator = (*iterator).getList().begin(); jiterator != (*iterator).getList().end(); ++jiterator) {
+                    if ((*jiterator).getDestination() == v.getID()) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
     public:
         Graph(); 
         Graph(const vector<Vertex> &v) {copy(v);}; 
@@ -135,9 +154,16 @@ class Graph {
         }
             
 
-        void addEdgebyID(const int &id1, const int &id2);
+        void addEdgebyID(const int &id1, const int &id2) {
+            if (!EdgeExistsbyID(id1, id2)) { 
+                this->vertices.at(id1).getList().push_back(id2);
+            }
+        }
 
-        bool EulerCircuit();
+        bool EulerCircuit(){
+            if (vertices.inDegree()==vertices.outDegree())
+
+        }
 
         bool EulerPath();
 
