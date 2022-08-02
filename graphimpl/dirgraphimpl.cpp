@@ -198,7 +198,26 @@ class Graph {
             return false; 
         }
 
-        bool EulerPath();
+        bool EulerPath() { 
+            int count1 = 0;
+            int count2 = 0;
+            int count3 = 0;
+            for (int i = 0; i < VertexAmount(); ++i) {
+                if (outDegree()[i] - inDegree()[i] == 1) {
+                    count1++;
+                }
+                else if (inDegree()[i] - outDegree()[i] == 1){
+                    count2++;
+                }
+                else if (inDegree()[i] == outDegree()[i]) {
+                    count3++;
+                }
+            }
+            if (count1 == count2 == 1 && count3 == VertexAmount() - 2) { 
+                return true;
+            }
+            return false;
+        }
 
         friend ostream & operator << (ostream &out, const Graph &g);
         
