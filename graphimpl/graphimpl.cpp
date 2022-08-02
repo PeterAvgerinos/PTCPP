@@ -80,6 +80,14 @@ class Graph {
                 return false;
         }
 
+        int Degree(Vertex &v) { 
+            int count = 0;
+            for (auto iterator=vertices.at(v.getID()).edgelist.begin(); iterator != vertices.at(v.getID()).edgelist.end(); ++iterator) {
+                count++;
+            }
+            return count;
+        }
+
     public: 
         Graph();
         Graph(Graph &p);
@@ -119,6 +127,37 @@ class Graph {
                 }            
         }
 
+        bool EulerCircuit(Vertex &v) { 
+            for (auto iterator = vertices.begin(); iterator != vertices.end(); ++iterator) {
+                if (this->Degree(*iterator)%2 == 0) {
+                    continue;
+                }
+                else {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        bool EulerPath(Vertex &v) { 
+            int count = 0;
+            for (auto iterator = vertices.begin(); iterator != vertices.end(); ++iterator) {
+                if (this->Degree(*iterator)%2 == 0) {
+                    continue;
+                }
+                if (this->Degree(*iterator)%2 == 1) { 
+                    count++;
+                }
+                else {
+                    return false;
+                }
+            }
+            if ((count == 0) || (count == 2)) { 
+                return true;
+            }
+            return false;
+        }
+        
         friend ostream & operator << (ostream &out,Graph &g) { 
             for (auto iterator=g.vertices.begin(); iterator != g.vertices.end(); iterator++){ 
                 out << (*iterator).getID();
