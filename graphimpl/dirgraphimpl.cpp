@@ -115,23 +115,19 @@ class Graph {
             }
         }
 
-        int outDegree(Vertex &v) {
-            int count = 0;
-            for (auto iterator = vertices.at(v.getID()).getList().begin(); iterator != vertices.at(v.getID()).getList().end(); ++iterator) {
-                count++;
+        vector<int> outDegree(Vertex &v) {
+            vector<int> count;
+            for (auto iterator = vertices.begin(); iterator != vertices.end(); ++iterator) {
+                count.push_back(0);
+                for (int i=0; i < (*iterator).getList().size(); i++){
+                    count[i] += 1;
+                }
             }
             return count;
         }
 
         int inDegree(Vertex &v) {
-            int count = 0;
-            for (auto iterator = vertices.begin(); iterator != vertices.end(); ++iterator) { 
-                for (auto jiterator = (*iterator).getList().begin(); jiterator != (*iterator).getList().end(); ++jiterator) {
-                    if ((*jiterator).getDestination() == v.getID()) {
-                        count++;
-                    }
-                }
-            }
+
             return count;
         }
     public:
