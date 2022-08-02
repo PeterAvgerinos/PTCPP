@@ -6,6 +6,7 @@
 
 using namespace std; 
 
+
 class Edge { 
     private: 
         int Destination;
@@ -23,6 +24,7 @@ class Edge {
            this->Destination = d; 
         }
 };
+
 
 class Vertex { 
     private:
@@ -66,7 +68,9 @@ class Vertex {
             }
         }
 
+
 };
+
 
 class Graph { 
     private: 
@@ -115,21 +119,46 @@ class Graph {
             }
         }
 
-        vector<int> outDegree(Vertex &v) {
-            vector<int> count;
-            for (auto iterator = vertices.begin(); iterator != vertices.end(); ++iterator) {
-                count.push_back(0);
-                for (int i=0; i < (*iterator).getList().size(); i++){
-                    count[i] += 1;
-                }
+        int VertexAmount() {
+            int count = 0; 
+            for (auto iterator = vertices.begin(); iterator != vertices.end(); iterator ++){
+                count++;
             }
             return count;
         }
 
-        int inDegree(Vertex &v) {
-
-            return count;
+        vector<int> inDegree() {
+            vector<int> counts;
+            for (int i=0; i < VertexAmount(); ++i) { 
+                counts[i] = 0;
+            }
+            for (auto iterator = vertices.begin(); iterator != vertices.end(); ++iterator) {
+                int i=0;
+                for (auto jiterator = (*iterator).getList().begin(); jiterator != (*iterator).getList().end(); ++jiterator) {
+                    counts[i] += 1;
+                    i++;
+                }
+            }
+            return counts;
         }
+
+        vector<int> outDegree() {
+            vector<int> counts;
+            for (int i=0; i < VertexAmount(); ++i) {
+                counts[i] = 0;
+            }
+            for (auto iterator = vertices.begin(); iterator != vertices.end(); ++iterator) {
+                int i=0;
+                for (auto jiterator = (*iterator).getList().begin(); jiterator != (*iterator).getList().end(); ++jiterator) {
+                    if ((*jiterator).getDestination()==(*iterator).getID()) {
+                        counts[i] += 1;
+                        i++;
+                    }
+                }
+            }
+            return counts;
+        }
+
     public:
         Graph(); 
         Graph(const vector<Vertex> &v) {copy(v);}; 
@@ -157,8 +186,16 @@ class Graph {
         }
 
         bool EulerCircuit(){
-            if (vertices.inDegree()==vertices.outDegree())
-
+            vector<int> count;
+            for (int i=0; i < VertexAmount(); ++i) {
+                count[i] = 0;
+            }
+            if (!(inDegree() == count && outDegree() == count )) { 
+                if (inDegree() == outDegree()) {
+                    return true;
+                }
+            }
+            return false; 
         }
 
         bool EulerPath();
