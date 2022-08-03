@@ -161,7 +161,7 @@ class Graph {
 
         const bool CycleSearch() { 
             vector<bool> visited; 
-            vector<Vertex> recStack;
+            vector<int> recStack;
             for (int i = 0; i < VertexAmount(); i++) {
                 visited[i] = false;
             }
