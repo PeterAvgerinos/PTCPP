@@ -3,6 +3,7 @@
 #include <iterator>
 #include <list>
 #include <vector>
+#include <stack>
 
 using namespace std; 
 
@@ -74,7 +75,7 @@ class Vertex {
 class Graph { 
     private: 
         vector<Vertex> vertices;
-
+        
         bool VertexExists(Vertex &v) { 
             for (const auto &vertex: vertices) { 
                 if (vertex.getID() == v.getID()) { 
@@ -118,7 +119,7 @@ class Graph {
             }
         }
 
-        int VertexAmount() {
+        const int VertexAmount() {
             int count = 0; 
             for (const auto &vertex: vertices) {
                 count++;
@@ -126,7 +127,7 @@ class Graph {
             return count;
         }
 
-        vector<int> inDegree() {
+        const vector<int> inDegree() {
             vector<int> counts;
             for (int i=0; i < VertexAmount(); ++i) { 
                 counts[i] = 0;
@@ -141,7 +142,7 @@ class Graph {
             return counts;
         }
 
-        vector<int> outDegree() {
+        const vector<int> outDegree() {
             vector<int> counts;
             for (int i=0; i < VertexAmount(); ++i) {
                 counts[i] = 0;
@@ -157,6 +158,29 @@ class Graph {
             }
             return counts;
         }
+
+        const bool CycleSearch() { 
+            vector<bool> visited; 
+            vector<Vertex> recStack;
+            for (int i = 0; i < VertexAmount(); i++) {
+                visited[i] = false;
+            }
+            int i = 0;
+            for (const auto &vertex: vertices) { 
+                visited[i] = true;
+                recStack.push_back(vertex);
+                i++;
+                for (const auto &edge: vertices[vertex]) { 
+                    if (visited[edge] == false) {
+                        recStack.push_back[vertex(edge)];
+                    }
+                    else {
+                        continue;
+                    }
+                }
+        }
+        return recStack[0].getID() == recStack[VertexAmount() - 1].getID();
+    }
 
     public:
         Graph(): vertices() {} 
@@ -218,6 +242,11 @@ class Graph {
             }
             return false;
         }
+
+        bool Cycle() { 
+            return CycleSearch();
+        }
+
 
         friend ostream & operator << (ostream &out,Graph &g) { 
             for (const auto &vertex: g.vertices) {
