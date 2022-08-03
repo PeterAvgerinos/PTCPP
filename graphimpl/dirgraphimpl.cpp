@@ -170,17 +170,17 @@ class Graph {
                 visited[i] = true;
                 recStack.push_back(vertex);
                 i++;
-                for (const auto &edge: vertices[vertex]) { 
-                    if (visited[edge] == false) {
-                        recStack.push_back[vertex(edge)];
-                    }
-                    else {
-                        continue;
+                for (const auto &edge: vertices[vertex.getID()].getList()) { 
+                    if (visited[edge.getDestination()] == false) {
+                        recStack[vertex.getID()].push_back[vertex.getID()];
+                        if (recStack[0].getID() == recStack[VertexAmount() - 1].getID()) { 
+                            return true;
+                        }
                     }
                 }
+                return false;
+            }
         }
-        return recStack[0].getID() == recStack[VertexAmount() - 1].getID();
-    }
 
     public:
         Graph(): vertices() {} 
