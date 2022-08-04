@@ -237,3 +237,20 @@ class Graph {
         }
         
 };
+
+int main() { 
+    Graph g;
+    Vertex a(0);
+    Vertex b(1);
+    Vertex c(2);
+    Vertex d(3);
+    g.addVertex(a);
+    g.addVertex(b);
+    g.addVertex(c);
+    g.addVertex(d);
+    g.addEdgebyID(0,1);
+    g.addEdgebyID(1,2);
+    g.addEdgebyID(2,3);
+    g.addEdgebyID(3,0);
+    cout << g;
+}
