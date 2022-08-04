@@ -240,14 +240,19 @@ class Graph {
 
 int main() { 
     Graph g;
+    cout << g;
     Vertex a(0);
     Vertex b(1);
     Vertex c(2);
     Vertex d(3);
     g.addVertex(a);
+    cout << g;
     g.addVertex(b);
+    cout << g;
     g.addVertex(c);
+    cout << g;
     g.addVertex(d);
+    cout << g;
     g.addEdgebyID(0,1);
     g.addEdgebyID(1,2);
     g.addEdgebyID(2,3);
