@@ -7,7 +7,6 @@
 
 using namespace std; 
 
-
 class Edge { 
     private: 
         int Destination;
@@ -227,11 +226,11 @@ class Graph {
 
         friend ostream & operator << (ostream &out,Graph &g) { 
             for (const auto &vertex: g.vertices) {
-                out << vertex.getID();
+                out << "Vertex: " << vertex.getID() << "has ";
                 for (const auto &edge: g.vertices[vertex.getID()].getList()) {
-                    out << edge.getDestination();
+                    out << edge.getDestination() << " ";
                 }
-                out << endl;
+                out << "edges" << endl;
             }
             return out;
         }
@@ -254,6 +253,7 @@ int main() {
     g.addVertex(d);
     cout << g;
     g.addEdgebyID(0,1);
+    g.addEdgebyID(0,2);
     g.addEdgebyID(1,2);
     g.addEdgebyID(2,3);
     g.addEdgebyID(3,0);
