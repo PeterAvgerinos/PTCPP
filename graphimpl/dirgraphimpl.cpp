@@ -30,7 +30,6 @@ class Edge {
 class Vertex { 
     private:
         int ID;
-        list<Edge> edgelist;
 
         void copy(const list<Edge> &e) { 
             for (const auto &Destination: e) { 
@@ -45,6 +44,7 @@ class Vertex {
         }
 
     public:
+        list<Edge> edgelist;
         Vertex();
         Vertex(const int &id): ID(id), edgelist() {}
         Vertex(const Vertex &v): ID(v.ID), edgelist() {copy(v.edgelist);}
@@ -97,7 +97,7 @@ class Graph {
 
         const bool EdgeExistsbyID(const int &id1, const int &id2) {
             if (VertexExistsbyID(id1) && VertexExistsbyID(id2)) { 
-                for (const auto &edge: vertices[id1].getList()) {
+                for (const auto &edge: vertices[id1].edgelist) {
                     if (edge.getDestination() == id2){
                         return true;
                     }                    
@@ -134,7 +134,7 @@ class Graph {
             }
             for (const auto &vertex: vertices) {
                 int i=0;
-                for (const auto &edge: vertices[vertex.getID()].getList()) {
+                for (const auto &edge: vertices[vertex.getID()].edgelist) {
                     counts[i] += 1;
                     i++;
                 }
@@ -149,7 +149,7 @@ class Graph {
             }
             for (const auto &vertex: vertices) {
                 int i=0;
-                for (const auto &edge: vertices[vertex.getID()].getList()) {
+                for (const auto &edge: vertices[vertex.getID()].edgelist) {
                     if (edge.getDestination()==vertex.getID()) {
                         counts[i] += 1;
                         i++;
@@ -206,7 +206,7 @@ class Graph {
         void addEdgebyID(const int &id1, const int &id2) {
             if (!EdgeExistsbyID(id1, id2)) { 
                 Edge e(id2);
-                vertices[id1].getList().push_back(e);
+                vertices[id1].edgelist.push_back(e);
             }
         }
 
@@ -244,8 +244,8 @@ class Graph {
             return false;
         }
 
-        bool Cycle() { 
-            return CycleSearch();
+        bool Cycle(const int &id1, const int &id2) { 
+            return CycleSearch(id1, id2);
         }
 
 
