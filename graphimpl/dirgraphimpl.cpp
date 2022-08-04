@@ -53,7 +53,7 @@ class Vertex {
             return this->ID;
         }
 
-        const list<Edge> & getList() const { 
+        list<Edge> & getList() { 
             return edgelist;
         }
 
