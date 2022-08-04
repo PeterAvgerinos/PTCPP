@@ -261,4 +261,6 @@ int main() {
     g.addEdgebyID(2,3);
     g.addEdgebyID(3,0);
     cout << g;
+    if (g.EulerCircuit()) cout << "Yes" << endl;
+    if (g.EulerPath()) cout << "Yes" << endl;
 }
