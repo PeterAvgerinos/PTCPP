@@ -22,7 +22,7 @@ class Road {
             this->Weight = w;
         }
 
-        const string & getDestination() {
+        const string & getDestination() const {
             return this->Destination;
         }
 
@@ -34,7 +34,23 @@ class Road {
 
 class City {
     private: 
+        string Name; 
+        vector<Road> roadlist;
 
+        void copy(const vector<Road> &r) { 
+            for (const auto &road: r) { 
+                this->roadlist.push_back(road);
+            }
+        }
+
+        void purge() { 
+            for (const auto &road: roadlist) { 
+                this->roadlist.pop_back();
+            }
+        }
 
     public:
+        City(): Name(), roadlist() {}
+        City(const string &n, const vector<Road> &r): Name(n) {copy(r);}
+        ~City() { purge(); }
 };
