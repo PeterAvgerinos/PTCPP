@@ -220,7 +220,10 @@ class Graph {
         }
 
         bool Cycle(vector<int> &path) const { 
-            return true;
+            if (path[0] == path[path.size() - 1]) { 
+                return true;
+            }
+            return false;
         }
 
 
