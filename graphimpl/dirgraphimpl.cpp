@@ -159,9 +159,10 @@ class Graph {
             return counts;
         }
 
-        const bool CycleSearch() { 
+        const bool CycleSearch(const int &id1, const int &id2) { 
             vector<bool> visited; 
             vector<int> recStack;
+            recStack.push_back(id1);
             for (int i = 0; i < VertexAmount(); i++) {
                 visited[i] = false;
             }
