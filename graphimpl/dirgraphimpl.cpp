@@ -109,13 +109,13 @@ class Graph {
         void copy(const vector<Vertex> &v){ 
             purge();
             for (const auto &vertex: v) {
-                vertices.push_back(vertex);
+                this->vertices.push_back(vertex);
             }           
         };
 
         void purge() {
             for (const auto &vertex: vertices) {
-                vertices.pop_back();
+                this->vertices.pop_back();
             }
         }
 
@@ -159,30 +159,6 @@ class Graph {
             return counts;
         }
 
-        const bool CycleSearch(const int &id1, const int &id2) { 
-            vector<bool> visited; 
-            vector<int> recStack;
-            recStack.push_back(id1);
-            for (int i = 0; i < VertexAmount(); i++) {
-                visited[i] = false;
-            }
-            int i = 0;
-            for (const auto &vertex: vertices) { 
-                visited[i] = true;
-                recStack.push_back(vertex);
-                i++;
-                for (const auto &edge: vertices[vertex.getID()].getList()) { 
-                    if (visited[edge.getDestination()] == false) {
-                        recStack[vertex.getID()].push_back[vertex.getID()];
-                        if (recStack[0].getID() == recStack[VertexAmount() - 1].getID()) { 
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
-        }
-
     public:
         Graph(): vertices() {} 
         Graph(const vector<Vertex> &v) {copy(v);}; 
@@ -206,7 +182,7 @@ class Graph {
         void addEdgebyID(const int &id1, const int &id2) {
             if (!EdgeExistsbyID(id1, id2)) { 
                 Edge e(id2);
-                vertices[id1].edgelist.push_back(e);
+                this->vertices[id1].edgelist.push_back(e);
             }
         }
 
@@ -244,8 +220,8 @@ class Graph {
             return false;
         }
 
-        bool Cycle(const int &id1, const int &id2) { 
-            return CycleSearch(id1, id2);
+        bool Cycle(vector<int> &path) const { 
+            return true;
         }
 
 
@@ -261,19 +237,3 @@ class Graph {
         }
         
 };
-
-int main() {
-    Vertex a(0);
-    Vertex b(1);
-    Vertex c(2);
-    Graph g;
-    g.addVertex(a);
-    g.addVertex(b);
-    g.addVertex(c);
-    g.addEdgebyID(0,1);
-    g.addEdgebyID(1,2);
-    g.addEdgebyID(2,0);
-    g.EulerCircuit();
-    g.EulerPath();
-    cout << g;
-}
