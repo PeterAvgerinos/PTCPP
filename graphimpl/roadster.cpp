@@ -53,12 +53,51 @@ class City {
         City(): Name(), roadlist() {}
         City(const string &n, const vector<Road> &r): Name(n) {copy(r);}
         ~City() { purge(); }
+
+        const string & getName() const {
+            return this->Name;
+        }
+
+        const vector<Road> & getRoadlist() {
+            return this->roadlist;
+        }
 };
 
 class Network { 
     private:
+        vector<City> cities;
 
+        void copy(const vector<City> &c) { 
+            purge();
+            for (const auto &city: c) { 
+               this->cities.push_back(city); 
+            }
+        }
+
+        void purge() { 
+            for (const auto &city: this->cities) { 
+                this->cities.pop_back();
+            }
+        }
+
+        bool CityExists(const City &c) { 
+            for (const auto &city: this->cities) {
+                if (c.getName() == city.getName()) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
     public:
+        Network():cities() {}
+        Network(const vector<City> &c):cities() { copy(c);}
+        ~Network() {purge();}
+
+        void addCity(const City &c) { 
+            if (!CityExists(c)) { 
+                this->cities.push_back(c);
+            }
+        }
 
 };
