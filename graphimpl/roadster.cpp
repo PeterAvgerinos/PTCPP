@@ -58,7 +58,7 @@ class City {
             return this->Name;
         }
 
-        const vector<Road> & getRoadlist() {
+        vector<Road> & getRoadlist() {
             return this->roadlist;
         }
 };
@@ -97,6 +97,12 @@ class Network {
         void addCity(const City &c) { 
             if (!CityExists(c)) { 
                 this->cities.push_back(c);
+            }
+        }
+
+        void addRoad(const Road &r) { 
+            if (!RoadExists(r)) {
+                
             }
         }
 
