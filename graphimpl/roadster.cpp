@@ -54,3 +54,11 @@ class City {
         City(const string &n, const vector<Road> &r): Name(n) {copy(r);}
         ~City() { purge(); }
 };
+
+class Network { 
+    private:
+
+
+    public:
+
+};
