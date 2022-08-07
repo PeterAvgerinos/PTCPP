@@ -38,8 +38,8 @@ class City {
         vector<Road> roadlist;
 
         void copy(const vector<Road> &r) { 
-            for (const auto &road: r) { 
-                this->roadlist.push_back(road);
+            for (const auto &Destination: r) { 
+                this->roadlist.push_back(Destination);
             }
         }
 
@@ -51,7 +51,8 @@ class City {
 
     public:
         City(): Name(), roadlist() {}
-        City(const string &n, const vector<Road> &r): Name(n) {copy(r);}
+        City(const string &name): Name(name), roadlist() {}
+        City(const City &c): Name(c.Name),roadlist() {copy(c.roadlist);}
         ~City() { purge(); }
 
         const string & getName() const {
@@ -60,6 +61,17 @@ class City {
 
         vector<Road> & getRoadlist() {
             return this->roadlist;
+        }
+
+        void setName(const string &name) { 
+            this->Name = name;
+        }
+
+        void setRoadlist(const vector<Road> &r) {
+            purge();
+            for (const auto &road: r) { 
+                this->roadlist.push_back(road);
+            }
         }
 };
 
@@ -89,6 +101,20 @@ class Network {
             return false;
         }
 
+        bool CityExistsbyName(const string &c) { 
+            for (const auto &city: cities) {
+                if (c == city.getName()) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    
+        bool RoadExists(const string &d1, const string &d2) {
+            if (CityExistsbyName(d1) && CityExistsbyName(d2)) { 
+                for (const auto &road: cities.at(d1).getRoadlist())
+            }
+        }
     public:
         Network():cities() {}
         Network(const vector<City> &c):cities() { copy(c);}
