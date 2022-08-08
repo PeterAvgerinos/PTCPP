@@ -112,7 +112,8 @@ class Network {
     
         bool RoadExists(const string &d1, const string &d2) {
             if (CityExistsbyName(d1) && CityExistsbyName(d2)) { 
-                for (const auto &road: cities.at(d1).getRoadlist())
+                for (const auto &road: cities.getName(d1).getRoadlist()) {
+
             }
         }
     public:
