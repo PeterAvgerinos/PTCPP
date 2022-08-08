@@ -10,11 +10,12 @@ using namespace std;
 class Edge { 
     private: 
         int Destination;
+        int Weigh;
 
     public:
         Edge();
-        Edge(const int &d): Destination(d) {}
-        Edge(const Edge &e): Destination(e.Destination) {}
+        Edge(const int &d, const int &w): Destination(d), Weigh(w) {}
+        Edge(const Edge &e): Destination(e.Destination), Weigh(e.Weigh) {}
 
         const int getDestination() const {
             return Destination;
@@ -22,6 +23,14 @@ class Edge {
 
         void setDestination(const int &d) { 
            this->Destination = d; 
+        }
+
+        const int getWeight() const { 
+            return Weigh;
+        }
+
+        void setWeight(const int &w) { 
+            this->Weigh = w;
         }
 };
 
