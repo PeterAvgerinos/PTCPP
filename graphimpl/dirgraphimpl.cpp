@@ -41,7 +41,7 @@ class Vertex {
         int ID;
 
         
-        void copy(const list<Edge> &e) { 
+        void copy(const vector<Edge> &e) { 
             for (const auto &edge: e) { 
                 this->edgelist.push_back(edge);
             }
@@ -49,12 +49,12 @@ class Vertex {
 
         void purge() {
             for (const auto &edge: edgelist) { 
-                edgelist.pop_front();
+                edgelist.pop_back();
             }
         }
 
     public:
-        list<Edge> edgelist;
+        vector<Edge> edgelist;
         Vertex();
         Vertex(const int &id): ID(id), edgelist() {}
         Vertex(const Vertex &v): ID(v.ID), edgelist() {copy(v.edgelist);}
@@ -64,7 +64,7 @@ class Vertex {
             return this->ID;
         }
 
-        list<Edge> & getList() { 
+        vector<Edge> & getList() { 
             return edgelist;
         }
 
@@ -268,10 +268,10 @@ class Car: private Graph {
 
         void Travel(const int &id1, const int &id2) {
             if (!EdgeExistsbyID(id1, id2)) { 
-                Capacity -= vertices[id1].edgelist;
+                Capacity -= vertices[id1].edgelist[id2].getWeight();
             }
-
         }
+
         
 };
 
