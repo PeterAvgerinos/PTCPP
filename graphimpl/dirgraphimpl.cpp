@@ -40,9 +40,10 @@ class Vertex {
     private:
         int ID;
 
+        
         void copy(const list<Edge> &e) { 
-            for (const auto &Destination: e) { 
-                this->edgelist.push_back(Destination);
+            for (const auto &edge: e) { 
+                this->edgelist.push_back(edge);
             }
         }
 
@@ -82,7 +83,7 @@ class Vertex {
 
 
 class Graph { 
-    private: 
+    protected: 
         vector<Vertex> vertices;
         
         bool VertexExists(Vertex &v) { 
@@ -188,9 +189,9 @@ class Graph {
         }
             
 
-        void addEdgebyID(const int &id1, const int &id2) {
+        void addEdgebyID(const int &id1, const int &id2, const int &w) {
             if (!EdgeExistsbyID(id1, id2)) { 
-                Edge e(id2);
+                Edge e(id2, w);
                 this->vertices[id1].edgelist.push_back(e);
             }
         }
@@ -249,6 +250,32 @@ class Graph {
         }
         
 };
+   
+class Car: private Graph {
+    private:
+        string carName;
+        int Capacity = 100; 
+        vector<int> Route;
+        
+    public: 
+        Car();
+        Car(const string &n, const int &c): carName(n), Capacity(c) {};
+        Car(const Car &c): carName(c.carName), Capacity(c.Capacity) {};
+
+        void Refuel() { 
+            this->Capacity = 100;
+        }
+
+        void Travel(const int &id1, const int &id2) {
+            if (!EdgeExistsbyID(id1, id2)) { 
+                Capacity -= vertices[id1].edgelist;
+            }
+
+        }
+        
+};
+
+
 
 int main() { 
     Graph g;
@@ -265,11 +292,11 @@ int main() {
     cout << g;
     g.addVertex(d);
     cout << g;
-    g.addEdgebyID(0,1);
-    g.addEdgebyID(0,2);
-    g.addEdgebyID(1,2);
-    g.addEdgebyID(2,3);
-    g.addEdgebyID(3,0);
+    g.addEdgebyID(0,1, 10);
+    g.addEdgebyID(0,2, 15);
+    g.addEdgebyID(1,2, 7);
+    g.addEdgebyID(2,3, 9);
+    g.addEdgebyID(3,0, 10);
     cout << g;
     if (g.EulerCircuit()) cout << "Yes" << endl;
     if (g.EulerPath()) cout << "Yes" << endl;
