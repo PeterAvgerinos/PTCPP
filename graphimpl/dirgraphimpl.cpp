@@ -37,9 +37,8 @@ class Edge {
 
 
 class Vertex { 
-    private:
+    protected:
         int ID;
-
         
         void copy(const vector<Edge> &e) { 
             for (const auto &edge: e) { 
@@ -82,7 +81,7 @@ class Vertex {
 };
 
 
-class Graph { 
+class Graph: public Vertex { 
     protected: 
         vector<Vertex> vertices;
         vector<Vertex> adjlist;
@@ -278,10 +277,6 @@ class Car: public Graph {
         }
 
        void TravelRoute(const Graph &g, const int &id1, const int &id2) {
-           if (!g.EulerPath()) {
-
-           }
-           
            
        }
 
