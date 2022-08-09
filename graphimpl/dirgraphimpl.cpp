@@ -85,6 +85,7 @@ class Vertex {
 class Graph { 
     protected: 
         vector<Vertex> vertices;
+        vector<Vertex> adjlist;
         
         bool VertexExists(Vertex &v) { 
             for (const auto &vertex: vertices) { 
@@ -237,6 +238,10 @@ class Graph {
             return false;
         }
 
+        bool Path(const int &id1, const int &id2) {
+           return true; 
+        }
+
 
         friend ostream & operator << (ostream &out,Graph &g) { 
             for (const auto &vertex: g.vertices) {
@@ -251,7 +256,7 @@ class Graph {
         
 };
    
-class Car: private Graph {
+class Car: public Graph {
     private:
         string carName;
         int Capacity = 100; 
@@ -266,11 +271,19 @@ class Car: private Graph {
             this->Capacity = 100;
         }
 
-        void Travel(const int &id1, const int &id2) {
+        void TravelRoad(const int &id1, const int &id2) {
             if (!EdgeExistsbyID(id1, id2)) { 
                 Capacity -= vertices[id1].edgelist[id2].getWeight();
             }
         }
+
+       void TravelRoute(const Graph &g, const int &id1, const int &id2) {
+           if (!g.EulerPath()) {
+
+           }
+           
+           
+       }
 
         
 };
