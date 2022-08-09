@@ -277,6 +277,15 @@ class Car: public Graph {
         }
 
        void TravelRoute(const Graph &g, const int &id1, const int &id2) {
+           if (id1 == id2) {
+               cout << "it's there already my guy" << endl;
+           }
+            bool *visited = new bool[vertices.size()];
+            for (int i=0; i < vertices.size(); ++i) { 
+                visited[i] = false;
+
+             efaefawd        
+
            
        }
 
