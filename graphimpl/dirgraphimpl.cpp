@@ -255,42 +255,40 @@ class Graph: public Vertex {
         
 };
    
-class Car: public Graph {
-    private:
-        string carName;
-        int Capacity = 100; 
-        vector<int> Route;
-        
-    public: 
-        Car();
-        Car(const string &n, const int &c): carName(n), Capacity(c) {};
-        Car(const Car &c): carName(c.carName), Capacity(c.Capacity) {};
-
-        void Refuel() { 
-            this->Capacity = 100;
-        }
-
-        void TravelRoad(const int &id1, const int &id2) {
-            if (!EdgeExistsbyID(id1, id2)) { 
-                Capacity -= vertices[id1].edgelist[id2].getWeight();
-            }
-        }
-
-       void TravelRoute(const Graph &g, const int &id1, const int &id2) {
-           if (id1 == id2) {
-               cout << "it's there already my guy" << endl;
-           }
-            bool *visited = new bool[vertices.size()];
-            for (int i=0; i < vertices.size(); ++i) { 
-                visited[i] = false;
-
-             efaefawd        
-
-           
-       }
-
-        
-};
+// class Car: public Graph {
+//     private:
+//         string carName;
+//         int Capacity = 100; 
+//         vector<int> Route;
+//         
+//     public: 
+//         Car();
+//         Car(const string &n, const int &c): carName(n), Capacity(c) {};
+//         Car(const Car &c): carName(c.carName), Capacity(c.Capacity) {};
+//
+//         void Refuel() { 
+//             this->Capacity = 100;
+//         }
+//
+//         void TravelRoad(const int &id1, const int &id2) {
+//             if (!EdgeExistsbyID(id1, id2)) { 
+//                 Capacity -= vertices[id1].edgelist[id2].getWeight();
+//             }
+//         }
+//
+//        void TravelRoute(const Graph &g, const int &id1, const int &id2) {
+//            if (id1 == id2) {
+//                cout << "it's there already my guy" << endl;
+//            }
+//             bool *visited = new bool[vertices.size()];
+//             for (int i=0; i < vertices.size(); ++i) { 
+//                 visited[i] = false;
+//             }
+//             visited[0] = true;
+//
+//
+//         
+// };
 
 
 
