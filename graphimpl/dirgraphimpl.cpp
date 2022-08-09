@@ -21,17 +21,18 @@ class Edge {
             return Destination;
         }
 
-        void setDestination(const int &d) { 
-           this->Destination = d; 
-        }
-
         const int getWeight() const { 
             return Weigh;
+        }
+
+        void setDestination(const int &d) { 
+           this->Destination = d; 
         }
 
         void setWeight(const int &w) { 
             this->Weigh = w;
         }
+
 };
 
 
